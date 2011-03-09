@@ -1,0 +1,76 @@
+
+#= Introduction
+
+This program is an example of literate programming in perl. It is basically a number guessing game...
+
+#~ <<TOP>>=
+
+<<import modules>>
+<<set the range>>
+<<pick a random number>>
+<<ask the user for a number>>
+<<check if the number was correct>>
+
+#-
+
+#= Set the range
+
+Pick an arbitrary range...
+
+#~
+$range = 20;
+#-
+
+#= Pick a random number
+
+We start by choosing a number by random, using Perl's |rand()| function. |rand()| takes a max, and returns a number between 0 and max, inclusive. Since it is a float, we must |floor()| it.
+
+#~
+
+my $rnum = rand($range);
+$rnum = floor($rnum);
+
+#-
+
+#= Ask the user for a number
+
+#~
+
+print "Enter a number between 0 and $range: ";
+my $user_num = <STDIN>;
+
+#-
+
+#= Check if the number was correct
+
+We check if the number was correct, and if not, reveal the real number;
+
+#~
+
+if ($user_num == $rnum) {
+	print "You guessed correctly!\n";
+} else {
+	print "Sorry, the number was $rnum.\n";
+}
+
+#-
+
+#= Silly stuff
+
+Here we make a silly ammendment to TOP...
+
+#~ <<TOP>>=
+
+print "Bye!\n";
+
+#-
+
+#= Import modules
+
+We need the POSIX module for |floor()|.
+
+#~
+
+use POSIX;
+
+#-

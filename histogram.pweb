@@ -1,0 +1,56 @@
+
+#= Introduction
+
+This program takes in a series of numbers, followed by an EOF. Then it makes a histogram.
+
+#~ <<TOP>>=
+#!/usr/bin/perl
+
+<<Variables>>
+<<Read numbers into buckets>>
+<<Draw histogram>>
+
+#-
+
+#= Read numbers into buckets
+
+We use the perl |while(<>)| idiom to read numbers into a hashtable, keeping track of min and max.
+
+#~
+while(<>) {
+	if (/(\d+)/) {
+		$numbers{$1} = defined $numbers{$1} ? $numbers{$1} + 1
+						    : 1;
+		if ($1 > $max) {
+			$max = $1;
+		}
+		if ($1 < $min) {
+			$min = $1;
+		}
+
+
+	}
+	else {
+		die "Can't find number in input '$_' ";
+	}
+}
+#-
+
+#= Draw Histogram
+
+Number of columns is |$max - $min + 1|. We go through each column, and print a bargraph for the number.
+
+#~
+print "Min: $min\n", "Max: $max\n";
+for ($min .. $max) {
+	my $count = $numbers{$_}//0;
+	print "$_: ", '#' x $count, " [$count]\n";
+}
+#-
+
+#= Variables
+
+#~
+my %numbers;
+my ($max, $min) = (0,0);
+#-
